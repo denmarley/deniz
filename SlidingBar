@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kayan Çubuk Top Gönderme Oyunu</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div id="game-area">
+    <div id="paddle"></div>
+    <div id="ball"></div>
+  </div>
+  <script>
+    // Variables to store the position of the ball and the paddle
+    let ballX = 50;
+    let ballY = 50;
+    let paddleX = 0;
+
+    // Variables to store the speed of the ball
+    let xSpeed = 5;
+    let ySpeed = 5;
+
+    // Variable to store the score
+    let score = 0;
+
+    // Function to move the paddle using the mouse
+    document.addEventListener("mousemove", function(event) {
+      paddleX = event.clientX - 50;
+      document.getElementById("paddle").style.left = paddleX + "px";
+    });
+
+    // Function to move the ball
+    setInterval(function() {
+      // Update the position of the ball
+      ballX += xSpeed;
+      ballY += ySpeed;
+
+      // Check if the ball hits the paddle
+      if (ballY + 20 > 500 && ballX > paddleX && ballX < paddleX + 100) {
+        ySpeed = -ySpeed;
+        score++;
+      }
+
+      // Check if the ball hits the walls
+      if (ballX + 20 > 800 || ballX < 0) {
+        xSpeed = -xSpeed;
+      }
+      if (ballY < 0) {
+        ySpeed = -ySpeed;
+      }
+
+      // Check if the ball goes out of the bottom of the screen
+      if (ballY > 600) {
+        alert("Game Over! Your score is: " + score);
+        location.reload();
+      }
+
+      // Update the position of the ball on the screen
+      document.getElementById("ball").style.left = ballX + "px";
+      document.getElementById("ball").style.top = ballY + "px";
+    }, 10);
+  </script>
+</body>
+</html>
